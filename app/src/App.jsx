@@ -2,6 +2,35 @@ import { useState } from "react";
 import { Segmented, Tooltip } from "antd";
 import Card from "./components/Card";
 
+export function parseDate(dateString) {
+  const parsedDate = new Date(Date.parse(dateString));
+
+  return parsedDate.toLocaleString("en-US", {
+    month: "long",
+    year: "numeric",
+    day: "numeric",
+  });
+}
+
+// news placeholder
+const news = [
+  {
+    date: "2024-05-10T19:50:43.319Z",
+    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+    url: "/",
+  },
+  {
+    date: "2024-03-10T19:50:43.319Z",
+    title: "If you want to get an exact match, use the next endpoint",
+    url: "/",
+  },
+  {
+    date: "2024-01-06T19:50:43.319Z",
+    title: "This is the most common and recommended approach for most cases",
+    url: "/",
+  },
+];
+
 function App() {
   const [country, setCountry] = useState("nigeria");
 
@@ -79,6 +108,16 @@ function App() {
           <Tooltip>
             <img src="/info.svg" alt="info" />
           </Tooltip>
+        </div>
+
+        <div className="container flex flex-col gap-5">
+          {news.map((item, index) => (
+            <>
+              {/* <div key={index}>{parseDate(item.date)}</div>
+          <div>{item.title}</div> */}
+              <Card key={index} title={parseDate(item.date)} content={item.title} />
+            </>
+          ))}
         </div>
       </div>
     </>
