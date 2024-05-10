@@ -5,9 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
-    colors: {
-      'trade-green': "#66C69A"
+    extend: {
+      colors: {
+        'trade-green': "#66C69A"
+      },
+    },
+    fontFamily: {
+      'sans': ['Onest', 'sans-serif']
     }
   },
   plugins: [],
