@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Segmented, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import Card from "./components/Card";
 import { MdInfoOutline } from "react-icons/md";
+import Segmented from "./components/Segmented";
 
 export function parseDate(dateString) {
   const parsedDate = new Date(Date.parse(dateString));
@@ -44,7 +45,7 @@ function App() {
       <p>Select a different country to view its economic indicators</p>
 
       {/* select component */}
-      <select name="Select country" id=""></select>
+      <select className="lg:w-1/2 " name="Select country" id=""></select>
 
       {/* country details */}
       <h2 className="text-2xl font-bold mt-5">{capitalize(country)}</h2>
@@ -95,16 +96,19 @@ function App() {
 
       {/* trade charts */}
       <div className="flex mt-5 gap-1 items-center">
-        <h3 className="text-xl font-bold">Trade</h3>
+        <h3 className="text-xl font-bold">Trade by category</h3>
         <Tooltip title="Imports and exports of goods by category">
           <MdInfoOutline />
         </Tooltip>
       </div>
 
-      <Segmented options={["Imports by category", "Exports by category"]} />
-      {/* chart here */}
+          {/* graphs for import/export */}
+      <Segmented tabs={['imports', 'exports']}>
+        <img src="/dummy-pie.svg" alt="" key={'imports'} />
+        <img src="/dummy-pie-2.svg" alt="" key={'exports'} />
+      </Segmented>
 
-      <div className="flex mt-5 gap-1 items-center ">
+      <div className="flex gap-1 items-center ">
         <h3 className="text-xl font-bold">Latest News</h3>
         <Tooltip>
           <MdInfoOutline />
