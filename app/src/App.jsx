@@ -44,7 +44,7 @@ function App() {
 
   // get list of countries
   useEffect(() => {
-    fetch("/src/countries.json")
+    fetch("./countries.json")
       .then((res) => res.json())
       .then((res) => setOptions(res));
   }, []);
