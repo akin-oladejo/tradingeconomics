@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tooltip } from "antd";
 import Card from "./components/Card";
 import { MdInfoOutline } from "react-icons/md";
 import Segmented from "./components/Segmented";
+// import axios from 'axios'
+import fs from "fs";
 
-export function parseDate(dateString) {
+function parseDate(dateString) {
   const parsedDate = new Date(Date.parse(dateString));
 
   return parsedDate.toLocaleString("en-US", {
@@ -13,6 +15,7 @@ export function parseDate(dateString) {
     day: "numeric",
   });
 }
+
 
 // news placeholder
 const news = [
@@ -34,18 +37,34 @@ const news = [
 ];
 
 function App() {
-  const [country, setCountry] = useState("nigeria");
+  const [country, setCountry] = useState("Nigeria");
+  const [options, setOptions] = useState([]);
 
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
+  // get list of countries
+  useEffect(() => {
+    fetch("/src/countries.json")
+      .then((res) => res.json())
+      .then((res) => setOptions(res));
+  }, []);
+
+
   return (
-    <div className="container flex flex-col font-sans p-8">
+    <div className="container flex flex-col lg:w-2/3 lg:m-auto font-sans p-8">
       {/* heading */}
       <h1 className="font-bold text-3xl">Economic Profile</h1>
       <p>Select a different country to view its economic indicators</p>
 
       {/* select component */}
-      <select className="lg:w-1/2 " name="Select country" id=""></select>
+      <select className="lg:w-1/2 " name="Select country" id="" value={country} onChange={(e)=>setCountry(e.target.value)}>
+        {options.map((country, index) => (
+          <option key={index} value={country}>
+            {country}
+          </option>
+        ))}
+      </select>
+      {/* <SelectCountry /> */}
 
       {/* country details */}
       <h2 className="text-2xl font-bold mt-5">{capitalize(country)}</h2>
@@ -59,9 +78,9 @@ function App() {
       {/* macro-economic indicators */}
       <div className="flex mt-5 gap-1 items-center">
         <h3 className="text-xl font-bold">Macro-Economic Indicators</h3>
-        <Tooltip>
-          <MdInfoOutline />
-        </Tooltip>
+        {/* <Tooltip> */}
+        <MdInfoOutline />
+        {/* </Tooltip> */}
       </div>
 
       {/* macro-economic cards */}
@@ -97,35 +116,31 @@ function App() {
       {/* trade charts */}
       <div className="flex mt-5 gap-1 items-center">
         <h3 className="text-xl font-bold">Trade by category</h3>
-        <Tooltip title="Imports and exports of goods by category">
-          <MdInfoOutline />
-        </Tooltip>
+        {/* <Tooltip title="Imports and exports of goods by category"> */}
+        <MdInfoOutline />
+        {/* </Tooltip> */}
       </div>
 
-          {/* graphs for import/export */}
-      <Segmented tabs={['imports', 'exports']}>
-        <img src="/dummy-pie.svg" alt="" key={'imports'} />
-        <img src="/dummy-pie-2.svg" alt="" key={'exports'} />
+      {/* graphs for import/export */}
+      <Segmented tabs={["imports", "exports"]}>
+        <img src="/dummy-pie.svg" alt="" key={"imports"} />
+        <img src="/dummy-pie-2.svg" alt="" key={"exports"} />
       </Segmented>
 
       <div className="flex gap-1 items-center ">
         <h3 className="text-xl font-bold">Latest News</h3>
-        <Tooltip>
-          <MdInfoOutline />
-        </Tooltip>
+        {/* <Tooltip> */}
+        <MdInfoOutline />
+        {/* </Tooltip> */}
       </div>
 
-      <div className="container flex flex-col gap-5">
+      <div className="container flex flex-col gap-5" key={"news-div"}>
         {news.map((item, index) => (
-          <>
-            {/* <div key={index}>{parseDate(item.date)}</div>
-          <div>{item.title}</div> */}
-            <Card
-              key={index}
-              title={parseDate(item.date)}
-              content={<a href={item.url}>{item.title}</a>}
-            />
-          </>
+          <Card
+            key={index}
+            title={parseDate(item.date)}
+            content={<a href={item.url}>{item.title}</a>}
+          />
         ))}
       </div>
     </div>
