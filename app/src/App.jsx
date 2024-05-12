@@ -3,18 +3,14 @@ import { Tooltip } from "antd";
 import Card from "./components/Card";
 import { MdInfoOutline } from "react-icons/md";
 import Segmented from "./components/Segmented";
+import News from "./components/News";
+import conf from "./conf";
+import { parseDate } from "./utils";
 // import axios from 'axios'
-import fs from "fs";
+// import fs from "fs";
 
-function parseDate(dateString) {
-  const parsedDate = new Date(Date.parse(dateString));
 
-  return parsedDate.toLocaleString("en-US", {
-    month: "long",
-    year: "numeric",
-    day: "numeric",
-  });
-}
+
 
 
 // news placeholder
@@ -37,7 +33,9 @@ const news = [
 ];
 
 function App() {
-  const [country, setCountry] = useState("Nigeria");
+  const apiKey = conf.apiKey;
+
+  const [country, setCountry] = useState("Mexico");
   const [options, setOptions] = useState([]);
 
   const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
@@ -57,7 +55,7 @@ function App() {
       <p>Select a different country to view its economic indicators</p>
 
       {/* select component */}
-      <select className="lg:w-1/2 " name="Select country" id="" value={country} onChange={(e)=>setCountry(e.target.value)}>
+      <select className="lg:w-1/2 p-2 rounded-md bg-black text-white" name="Select country" id="" value={country} onChange={(e)=>setCountry(e.target.value)}>
         {options.map((country, index) => (
           <option key={index} value={country}>
             {country}
@@ -134,7 +132,7 @@ function App() {
         {/* </Tooltip> */}
       </div>
 
-      <div className="container flex flex-col gap-5" key={"news-div"}>
+      {/* <div className="container flex flex-col gap-5" key={"news-div"}>
         {news.map((item, index) => (
           <Card
             key={index}
@@ -142,7 +140,9 @@ function App() {
             content={<a href={item.url}>{item.title}</a>}
           />
         ))}
-      </div>
+      </div> */}
+
+      <News country={country} apiKey={apiKey}/>
     </div>
   );
 }
