@@ -118,7 +118,7 @@ function App() {
 
       {/* select country */}
       <select
-        className="p-2 rounded-md bg-black text-white"
+        className="p-2 rounded-md bg-slate-800 text-white"
         name="Select country"
         id=""
         value={country}
