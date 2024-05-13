@@ -7,6 +7,7 @@ import News from "./components/News";
 import conf from "./conf";
 import { parseDate } from "./utils";
 import IndicatorCard from "./components/IndicatorCards";
+import Heading from "./components/Heading";
 // import axios from 'axios'
 // import fs from "fs";
 
@@ -91,15 +92,9 @@ function App() {
       </p>
 
       {/* macro-economic indicators */}
-      <div className="flex mt-5 gap-1 items-center">
-        <h3 className="text-xl font-bold">Macro-Economic Indicators</h3>
-        {/* <Tooltip> */}
-        <MdInfoOutline />
-        {/* </Tooltip> */}
-      </div>
+      <Heading title={'Macro-Economic Indicators'}/>
 
       {!showIndicators && <p>Loading indicators...</p>}
-      {/* macro-economic cards */}
       {showIndicators && (
         <Segmented
           className="flex flex-col md:flex-row md:flex-wrap gap-5"
@@ -113,19 +108,8 @@ function App() {
         </Segmented>
       )}
 
-      {/* <div className="flex flex-col md:flex-row md:flex-wrap gap-5">
-        
-        <IndicatorCard country={country} indicator={"gdp"} info={'GDP Metrics'}/>
-
-      </div> */}
-
       {/* trade charts */}
-      <div className="flex mt-5 gap-1 items-center">
-        <h3 className="text-xl font-bold">Trade by category</h3>
-        {/* <Tooltip title="Imports and exports of goods by category"> */}
-        <MdInfoOutline />
-        {/* </Tooltip> */}
-      </div>
+      <Heading title={'Trade by category'}/>
 
       {/* graphs for import/export */}
       <Segmented tabs={["imports", "exports"]}>
@@ -133,14 +117,8 @@ function App() {
         <img src="/dummy-pie-2.svg" alt="" key={"exports"} />
       </Segmented>
 
-      <div className="flex gap-1 items-center ">
-        <h3 className="text-xl font-bold">Latest News</h3>
-        {/* <Tooltip> */}
-        <MdInfoOutline />
-        {/* </Tooltip> */}
-      </div>
-
       {/* show latest news */}
+      <Heading title={'Latest News'}/>
       {!showNews && <p>Loading News...</p>}
       {showNews && <News country={country} />}
     </div>
