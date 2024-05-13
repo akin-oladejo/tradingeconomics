@@ -35,23 +35,23 @@ export default function IndicatorCards({ country, indicator, info }) {
   return (
     <>
       {isLoading && <p>Loading Info...</p>}
-      {error && (
-        <Card
-          content={error.message}
-        />
-      )}
+      {error && <Card content={error.message} />}
       {!error &&
         !isLoading &&
-        data.slice(0,5).map((i, index) => (
-          <Card
-            for={indicator}
-            key={index}
-            title={i.Category}
-            content={i.LatestValue}
-              foot={`was: ${i.PreviousValue?i.PreviousValue:''}`}
-            tooltip={info}
-          />
-        ))}
+        data
+          .slice(0, 5)
+          .map((i, index) => (
+            <Card
+              for={indicator}
+              key={index}
+              title={`${i.Category} ${i.Unit?'('+i.Unit+')':''}`}
+              content={i.LatestValue.toLocaleString()}
+              foot={`was: ${
+                i.PreviousValue ? i.PreviousValue.toLocaleString(): ""
+              }`}
+              tooltip={info}
+            />
+          ))}
     </>
   );
 }

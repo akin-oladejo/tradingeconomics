@@ -103,20 +103,13 @@ function App() {
       {showIndicators && (
         <Segmented
           className="flex flex-col md:flex-row md:flex-wrap gap-5"
-          tabs={["gdp", "labour", "taxes", "markets"]}
+          tabs={["gdp", "labour", "taxes", "markets", "climate"]}
         >
           <IndicatorCard country={country} indicator={"gdp"} key={"gdp"} />
-          <IndicatorCard
-            country={country}
-            indicator={"labour"}
-            key={"labour"}
-          />
+          <IndicatorCard country={country} indicator={"labour"} key={"labour"}/>
           <IndicatorCard country={country} indicator={"taxes"} key={"taxes"} />
-          <IndicatorCard
-            country={country}
-            indicator={"markets"}
-            key={"markets"}
-          />
+          <IndicatorCard country={country} indicator={"markets"} key={"markets"} />
+          <IndicatorCard country={country} indicator={"climate"} key={"climate"} />
         </Segmented>
       )}
 
