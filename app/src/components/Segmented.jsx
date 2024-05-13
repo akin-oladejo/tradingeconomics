@@ -1,31 +1,42 @@
 import { useState } from "react";
 
-function Segmented({ tabs, children }) {
+function Segmented({ tabs, children, className }) {
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
   return (
     <>
-    {/* tab buttons */}
+      {/* tab buttons */}
       <div className="flex gap-2 my-2">
         {tabs.map((tab, index) => (
-            <div
-              key={index}
-              className={`flex cursor-pointer justify-center rounded-3xl 
-              ${tab == selectedTab ? "bg-black text-white" : "bg-white text-black"}
+          <div
+            key={index}
+            className={`flex cursor-pointer justify-center rounded-3xl 
+              ${
+                tab == selectedTab
+                  ? "bg-black text-white"
+                  : "bg-white text-black"
+              }
                 w-fit px-3 py-1`}
-              onClick={() => {
-                setSelectedTab(tab);
-              }}
-            >
-              {tab}
-            </div>
+            onClick={() => {
+              setSelectedTab(tab);
+            }}
+          >
+            {tab}
+          </div>
         ))}
       </div>
 
-      {/* segmented content */}
-      <div className="my-5 lg:w-1/2 h-72 bg-black rounded-xl flex justify-center items-center">
-        {children.filter((content)=>{return content.key==selectedTab})}
+      <div className={className}>
+        {/* segmented content */}
+      {children.filter((content) => {
+          // console.log(content.tab);
+          return content.key == selectedTab;
+        })}
       </div>
+      
+      {/* <div className="my-5 lg:w-1/2 h-72 bg-black rounded-xl flex justify-center items-center">
+        
+      </div> */}
     </>
   );
 }

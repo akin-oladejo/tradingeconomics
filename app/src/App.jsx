@@ -6,12 +6,9 @@ import Segmented from "./components/Segmented";
 import News from "./components/News";
 import conf from "./conf";
 import { parseDate } from "./utils";
+import IndicatorCard from "./components/IndicatorCards";
 // import axios from 'axios'
 // import fs from "fs";
-
-
-
-
 
 // news placeholder
 const news = [
@@ -36,17 +33,31 @@ function App() {
   const apiKey = conf.apiKey;
 
   const [country, setCountry] = useState("Mexico");
-  const [options, setOptions] = useState([]);
+  const [showNews, setShowNews] = useState(false);
+  const [showIndicators, setShowIndicators] = useState(false);
+  // const countries = [{name:'Sweden'}, {name:'Mexico'}, {name:'New Zealand'}, {name:'Thailand'}]
+  const countries = ["Sweden", "Mexico", "New Zealand", "Thailand"];
 
-  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+  // const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
-  // get list of countries
   useEffect(() => {
-    fetch("./countries.json")
-      .then((res) => res.json())
-      .then((res) => setOptions(res));
-  }, []);
-
+    setShowNews(false);
+    setShowIndicators(false);
+    // implements a time delay to avoid a 409
+    const indicatorTimer = setTimeout(() => {
+      console.log('Delaying news by 2s to avoid rate limit')
+      setShowIndicators(true);
+    }, 2000);
+    const newsTimer = setTimeout(() => {
+      console.log('Delaying indicators by 5s to avoid rate limit')
+      setShowNews(true);
+    }, 5000);
+    
+    return () => {
+      clearTimeout(newsTimer);
+      clearTimeout(indicatorTimer);
+    };
+  }, [country]);
 
   return (
     <div className="container flex flex-col lg:w-2/3 lg:m-auto font-sans p-8">
@@ -55,8 +66,14 @@ function App() {
       <p>Select a different country to view its economic indicators</p>
 
       {/* select component */}
-      <select className="lg:w-1/2 p-2 rounded-md bg-black text-white" name="Select country" id="" value={country} onChange={(e)=>setCountry(e.target.value)}>
-        {options.map((country, index) => (
+      <select
+        className="lg:w-1/2 p-2 rounded-md bg-black text-white"
+        name="Select country"
+        id=""
+        value={country}
+        onChange={(e) => setCountry(e.target.value)}
+      >
+        {countries.map((country, index) => (
           <option key={index} value={country}>
             {country}
           </option>
@@ -65,7 +82,7 @@ function App() {
       {/* <SelectCountry /> */}
 
       {/* country details */}
-      <h2 className="text-2xl font-bold mt-5">{capitalize(country)}</h2>
+      <h2 className="text-2xl font-bold mt-5">{country}</h2>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid ducimus
         sunt odio saepe animi, qui amet optio aut pariatur necessitatibus
@@ -81,35 +98,33 @@ function App() {
         {/* </Tooltip> */}
       </div>
 
+      {!showIndicators && <p>Loading indicators...</p>}
       {/* macro-economic cards */}
-      <div className="flex flex-col md:flex-row gap-5">
-        <Card
-          title={"GDP"}
-          content={"$4.2 Trillion"}
-          foot={"-3.2%"}
-          tooltip={
-            "Gross domestic product is a monetary measure of the market value of all the final goods and services produced and rendered in a specific time period by a country or countries"
-          }
-        />
+      {showIndicators && (
+        <Segmented
+          className="flex flex-col md:flex-row md:flex-wrap gap-5"
+          tabs={["gdp", "labour", "taxes", "markets"]}
+        >
+          <IndicatorCard country={country} indicator={"gdp"} key={"gdp"} />
+          <IndicatorCard
+            country={country}
+            indicator={"labour"}
+            key={"labour"}
+          />
+          <IndicatorCard country={country} indicator={"taxes"} key={"taxes"} />
+          <IndicatorCard
+            country={country}
+            indicator={"markets"}
+            key={"markets"}
+          />
+        </Segmented>
+      )}
 
-        <Card
-          title={"GDP"}
-          content={"$4.2 Trillion"}
-          foot={"-3.2%"}
-          tooltip={
-            "Gross domestic product is a monetary measure of the market value of all the final goods and services produced and rendered in a specific time period by a country or countries"
-          }
-        />
+      {/* <div className="flex flex-col md:flex-row md:flex-wrap gap-5">
+        
+        <IndicatorCard country={country} indicator={"gdp"} info={'GDP Metrics'}/>
 
-        <Card
-          title={"GDP"}
-          content={"$4.2 Trillion"}
-          foot={"-3.2%"}
-          tooltip={
-            "Gross domestic product is a monetary measure of the market value of all the final goods and services produced and rendered in a specific time period by a country or countries"
-          }
-        />
-      </div>
+      </div> */}
 
       {/* trade charts */}
       <div className="flex mt-5 gap-1 items-center">
@@ -132,17 +147,9 @@ function App() {
         {/* </Tooltip> */}
       </div>
 
-      {/* <div className="container flex flex-col gap-5" key={"news-div"}>
-        {news.map((item, index) => (
-          <Card
-            key={index}
-            title={parseDate(item.date)}
-            content={<a href={item.url}>{item.title}</a>}
-          />
-        ))}
-      </div> */}
-
-      <News country={country} apiKey={apiKey}/>
+      {/* show latest news */}
+      {!showNews && <p>Loading News...</p>}
+      {showNews && <News country={country} />}
     </div>
   );
 }

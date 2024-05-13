@@ -2,28 +2,30 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./Card";
 import { parseDate } from "../utils";
+import conf from "../conf";
 
-export default function News({ country, apiKey }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+export default function News({ country }) {
+  const [newsIsLoading, setNewsIsLoading] = useState(false);
+  const [newsError, setNewsError] = useState(null);
   const [news, setNews] = useState([]);
+
+  const apiKey = conf.apiKey;
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
-      setError(null);
+      setNewsIsLoading(true);
+      setNewsError(null);
       try {
+        // setTimeout(() => {console.log("Delaying by 5s to avoid rate limit");}, 5000);
         const response = await axios.get(
-          `https://api.tradingeconomics.com/news/country/${country}?c=${apiKey}`,
-          
+          `https://api.tradingeconomics.com/news/country/${country}?c=${apiKey}`
         );
         // console.log(response.data);
-        setNews(response.data)
-        // setNews(response.data.map((item) => item.name.common));
-      } catch (error) {
-        setError(error);
+        setNews(response.data);
+      } catch (newsError) {
+        setNewsError(newsError);
       } finally {
-        setIsLoading(false);
+        setNewsIsLoading(false);
       }
     };
 
@@ -32,58 +34,28 @@ export default function News({ country, apiKey }) {
 
   return (
     <>
-      {isLoading && <p>Loading News...</p>}
-      {!isLoading && (
+      {newsIsLoading && <p>Loading News...</p>}
+      {newsError && <p>{`Error occurred: ${newsError}`}</p>}
+      {!newsIsLoading && !newsError && (
         <div className="container flex flex-col gap-5" key={"news-div"}>
-          {news.slice(0,5).map((item, index) => (
+          {news.slice(0, 5).map((item, index) => (
             <Card
               key={index}
               title={parseDate(item.date)}
               content={item.title}
-              foot={<a href={`https://tradingeconomics.com${item.url}`} target="_blank" style={{textDecoration:'underline'}}>visit link</a>}
+              foot={
+                <a
+                  href={`https://tradingeconomics.com${item.url}`}
+                  target="_blank"
+                  style={{ textDecoration: "underline" }}
+                >
+                  visit link
+                </a>
+              }
             />
           ))}
         </div>
       )}
-      {error && <p>{`Error occurred: ${error}`}</p>}
     </>
   );
 }
-
-// const CountriesDropdown = () => {
-//   const [countries, setCountries] = useState([]);
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       setIsLoading(true);
-//       setError(null);
-//       try {
-//         const response = await axios.get("https://restcountries.com/v3.1/all");
-//         setCountries(response.data.map((country) => country.name.common));
-//       } catch (error) {
-//         setError(error);
-//       } finally {
-//         setIsLoading(false);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   if (isLoading) return <p>Loading countries...</p>;
-
-//   if (error) return <p>Error fetching countries: {error.message}</p>;
-
-//   return (
-//     <select>
-//       <option value="">Select a Country</option>
-//       {countries.map((country, index) => (
-//         <option key={index} value={country}>
-//           {country}
-//         </option>
-//       ))}
-//     </select>
-//   );
-// };
