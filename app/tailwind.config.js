@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'trade-green': "#66C69A"
+        'trade-green': "#3adfff"
       },
     },
     fontFamily: {

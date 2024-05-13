@@ -46,7 +46,6 @@ export default function News({ country }) {
                 <a
                   href={`https://tradingeconomics.com${item.url}`}
                   target="_blank"
-                  style={{  color: '#66C69A' }}
                 >
                   read more
                 </a>

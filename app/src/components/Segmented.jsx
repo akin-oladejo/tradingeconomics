@@ -13,7 +13,7 @@ function Segmented({ tabs, children, className }) {
             className={`flex cursor-pointer justify-center rounded-3xl 
               ${
                 tab == selectedTab
-                  ? "bg-black text-white"
+                  ? "bg-slate-800 text-white"
                   : "bg-white text-black"
               }
                 w-fit px-3 py-1`}
