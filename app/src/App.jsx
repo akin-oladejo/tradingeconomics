@@ -1,100 +1,24 @@
 import { useEffect, useState } from "react";
-import Card from "./components/Card";
-import { MdInfoOutline } from "react-icons/md";
 import Segmented from "./components/Segmented";
 import News from "./components/News";
 import conf from "./conf";
-import { parseDate } from "./utils";
 import IndicatorCard from "./components/IndicatorCards";
-import Heading from "./components/Section";
 import Profile from "./components/Profile";
 import Section from "./components/Section";
-// import axios from 'axios'
-// import fs from "fs";
+import Table from "./components/Table";
 
-// news placeholder
-const news = [
-  {
-    date: "2024-05-10T19:50:43.319Z",
-    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-    url: "/",
-  },
-  {
-    date: "2024-03-10T19:50:43.319Z",
-    title: "If you want to get an exact match, use the next endpoint",
-    url: "/",
-  },
-  {
-    date: "2024-01-06T19:50:43.319Z",
-    title: "This is the most common and recommended approach for most cases",
-    url: "/",
-  },
-];
 
 function App() {
-  const apiKey = conf.apiKey;
-
   const [country, setCountry] = useState("Mexico");
   const [showNews, setShowNews] = useState(false);
   const [showIndicators, setShowIndicators] = useState(false);
-  // const countrie = [
-  //   {
-  //     name: "Mexico",
-  //     flag: "https://flagcdn.com/mx.svg",
-  //     capital: "Mexico City",
-  //     currency: {
-  //       name: "Mexican peso",
-  //       symbol: "$",
-  //     },
-  //     map: "https://goo.gl/maps/s5g7imNPMDEePxzbA",
-  //     profile:
-  //       "Mexico is a country in the southern portion of North America. It covers 1,972,550 km2 (761,610 sq mi), making it the world's 13th-largest country by area; with a population of almost 130 million, it is the 10th-most-populous country and the most populous Spanish-speaking country.",
-  //   },
-  //   {
-  //     name: "New Zealand",
-  //     flag: "https://flagcdn.com/mx.svg",
-  //     capital: "Mexico City",
-  //     currency: {
-  //       name: "Mexican peso",
-  //       symbol: "$",
-  //     },
-  //     map: "https://goo.gl/maps/s5g7imNPMDEePxzbA",
-  //     profile:
-  //       "Mexico is a country in the southern portion of North America. It covers 1,972,550 km2 (761,610 sq mi), making it the world's 13th-largest country by area; with a population of almost 130 million, it is the 10th-most-populous country and the most populous Spanish-speaking country.",
-  //   },
-  //   {
-  //     name: "Sweden",
-  //     flag: "https://flagcdn.com/se.svg",
-  //     capital: "Stockholm",
-  //     currency: {
-  //       "name": "Swedish krona",
-  //       "symbol": "kr"
-  //       },
-  //     map: "https://goo.gl/maps/iqygE491ADVgnBW39",
-  //     profile:
-  //       "Sweden is a Nordic country located on the Scandinavian Peninsula in Northern Europe. It borders Norway to the west and north, Finland to the east, and is connected to Denmark in the southwest by a bridge–tunnel across the Öresund. At 450,295 square kilometres (173,860 sq mi), Sweden is the largest Nordic country and the fifth-largest country in Europe.",
-  //   },
-  //   {
-  //     name: "Thailand",
-  //     flag: "https://flagcdn.com/mx.svg",
-  //     capital: "Mexico City",
-  //     currency: {
-  //       name: "Mexican peso",
-  //       symbol: "$",
-  //     },
-  //     map: "https://goo.gl/maps/s5g7imNPMDEePxzbA",
-  //     profile:
-  //       "Mexico is a country in the southern portion of North America. It covers 1,972,550 km2 (761,610 sq mi), making it the world's 13th-largest country by area; with a population of almost 130 million, it is the 10th-most-populous country and the most populous Spanish-speaking country.",
-  //   },
-  // ];
   const countries = ["Sweden", "Mexico", "New Zealand", "Thailand"];
-
-  // const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
   useEffect(() => {
     setShowNews(false);
     setShowIndicators(false);
-    // implements a time delay to avoid a 409
+
+    // implement a time delay to avoid a 409 from rate limiting
     const indicatorTimer = setTimeout(() => {
       console.log("Delaying news by 2s to avoid rate limit");
       setShowIndicators(true);
@@ -171,8 +95,8 @@ function App() {
       <Section title={"Trade by category"}>
         {/* graphs for import/export */}
         <Segmented tabs={["imports", "exports"]}>
-          <img src="/dummy-pie.svg" alt="" key={"imports"} />
-          <img src="/dummy-pie-2.svg" alt="" key={"exports"} />
+          <Table country={country} type={'import'} key={'imports'} />
+          <Table country={country} type={'export'} key={'exports'} />
         </Segmented>
       </Section>
 
