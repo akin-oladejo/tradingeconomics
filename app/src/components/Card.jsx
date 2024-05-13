@@ -1,4 +1,3 @@
-import { Tooltip } from "antd";
 import { MdInfoOutline } from "react-icons/md";
 
 function Card({ title, content, foot, tooltip}) {
@@ -7,9 +6,9 @@ function Card({ title, content, foot, tooltip}) {
       <div className="flex justify-between">
         <span className="text-sm text-trade-green">{title}</span>
         {tooltip && (
-          <Tooltip title={tooltip}>
+          // <Tooltip title={tooltip}>
             <MdInfoOutline />
-          </Tooltip>
+          // </Tooltip>
         )}
       </div>
       <p className="text-md">{content}</p>

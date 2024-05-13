@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Tooltip } from "antd";
 import Card from "./components/Card";
 import { MdInfoOutline } from "react-icons/md";
 import Segmented from "./components/Segmented";
@@ -7,8 +6,9 @@ import News from "./components/News";
 import conf from "./conf";
 import { parseDate } from "./utils";
 import IndicatorCard from "./components/IndicatorCards";
-import Heading from "./components/Heading";
+import Heading from "./components/Section";
 import Profile from "./components/Profile";
+import Section from "./components/Section";
 // import axios from 'axios'
 // import fs from "fs";
 
@@ -118,7 +118,7 @@ function App() {
 
       {/* select country */}
       <select
-        className="p-2 rounded-md bg-slate-800 text-white"
+        className="p-2 rounded-md bg-slate-700 text-white mt-5"
         name="Select country"
         id=""
         value={country}
@@ -132,50 +132,55 @@ function App() {
       </select>
 
       {/* country details */}
-      <Profile country={country}/>
+      <Profile country={country} />
 
       {/* macro-economic indicators */}
-      <Heading title={"Macro-Economic Indicators"} />
-
-      {!showIndicators && <p>Loading indicators...</p>}
-      {showIndicators && (
-        <Segmented
-          className="flex flex-col flex-wrap md:flex-row  gap-5"
-          tabs={["gdp", "labour", "taxes", "markets", "climate"]}
-        >
-          <IndicatorCard country={country} indicator={"gdp"} key={"gdp"} />
-          <IndicatorCard
-            country={country}
-            indicator={"labour"}
-            key={"labour"}
-          />
-          <IndicatorCard country={country} indicator={"taxes"} key={"taxes"} />
-          <IndicatorCard
-            country={country}
-            indicator={"markets"}
-            key={"markets"}
-          />
-          <IndicatorCard
-            country={country}
-            indicator={"climate"}
-            key={"climate"}
-          />
-        </Segmented>
-      )}
+      <Section title={"Macro-Economic Indicators"}>
+        {!showIndicators && <p>Loading indicators...</p>}
+        {showIndicators && (
+          <Segmented
+            className="flex flex-col flex-wrap md:flex-row  gap-5"
+            tabs={["gdp", "labour", "taxes", "markets", "climate"]}
+          >
+            <IndicatorCard country={country} indicator={"gdp"} key={"gdp"} />
+            <IndicatorCard
+              country={country}
+              indicator={"labour"}
+              key={"labour"}
+            />
+            <IndicatorCard
+              country={country}
+              indicator={"taxes"}
+              key={"taxes"}
+            />
+            <IndicatorCard
+              country={country}
+              indicator={"markets"}
+              key={"markets"}
+            />
+            <IndicatorCard
+              country={country}
+              indicator={"climate"}
+              key={"climate"}
+            />
+          </Segmented>
+        )}
+      </Section>
 
       {/* trade charts */}
-      <Heading title={"Trade by category"} />
-
-      {/* graphs for import/export */}
-      <Segmented tabs={["imports", "exports"]}>
-        <img src="/dummy-pie.svg" alt="" key={"imports"} />
-        <img src="/dummy-pie-2.svg" alt="" key={"exports"} />
-      </Segmented>
+      <Section title={"Trade by category"}>
+        {/* graphs for import/export */}
+        <Segmented tabs={["imports", "exports"]}>
+          <img src="/dummy-pie.svg" alt="" key={"imports"} />
+          <img src="/dummy-pie-2.svg" alt="" key={"exports"} />
+        </Segmented>
+      </Section>
 
       {/* show latest news */}
-      <Heading title={"Latest News"} />
-      {!showNews && <p>Loading News...</p>}
-      {showNews && <News country={country} />}
+      <Section title={"Latest News"}>
+        {!showNews && <p>Loading News...</p>}
+        {showNews && <News country={country} />}
+      </Section>
     </div>
   );
 }
