@@ -111,7 +111,7 @@ function App() {
   }, [country]);
 
   return (
-    <div className="container flex flex-col lg:w-2/3 lg:m-auto font-sans p-8">
+    <div className="container text-white flex flex-col lg:w-2/3 lg:m-auto font-sans p-8">
       {/* heading */}
       <h1 className="font-bold text-3xl">Economic Profile</h1>
       <p>Select a different country to view its economic indicators</p>

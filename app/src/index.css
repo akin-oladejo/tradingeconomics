@@ -5,7 +5,8 @@
 @tailwind utilities;
 
 body{
-  background: #66C69A;
+  /* background: #66C69A; */
+  background: rgb(30, 30, 30);
 }
 
 /* :root {

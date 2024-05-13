@@ -43,7 +43,7 @@ export default function Profile({ country }) {
           <p>{`Currency: ${Object.values(data["currencies"])[0]['name']} (${Object.values(data["currencies"])[0]['symbol']})`}</p>
           <p>
             Map:{" "}
-            <a href={data["maps"]["googleMaps"]} target="_blank" style={{textDecoration:'underline'}}>
+            <a href={data["maps"]["googleMaps"]} target="_blank" style={{color: '#66C69A'}}>
               View in Google Maps
             </a>
           </p>
