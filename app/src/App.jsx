@@ -7,7 +7,6 @@ import Profile from "./components/Profile";
 import Section from "./components/Section";
 import Table from "./components/Table";
 
-
 function App() {
   const [country, setCountry] = useState("Mexico");
   const [showNews, setShowNews] = useState(false);
@@ -64,8 +63,32 @@ function App() {
         {showIndicators && (
           <Segmented
             className="flex flex-col flex-wrap md:flex-row  gap-5"
-            tabs={["gdp", "labour", "taxes", "markets", "climate"]}
+            tabs={[
+              "gdp",
+              "labour",
+              "business",
+              "taxes",
+              "markets",
+              "climate",
+              "housing",
+              "prices",
+            ]}
           >
+            <IndicatorCard
+              country={country}
+              indicator={"business"}
+              key={"business"}
+            />
+            <IndicatorCard
+              country={country}
+              indicator={"housing"}
+              key={"housing"}
+            />
+            <IndicatorCard
+              country={country}
+              indicator={"prices"}
+              key={"prices"}
+            />
             <IndicatorCard country={country} indicator={"gdp"} key={"gdp"} />
             <IndicatorCard
               country={country}
@@ -95,8 +118,8 @@ function App() {
       <Section title={"Trade by category"}>
         {/* graphs for import/export */}
         <Segmented tabs={["imports", "exports"]}>
-          <Table country={country} type={'import'} key={'imports'} />
-          <Table country={country} type={'export'} key={'exports'} />
+          <Table country={country} type={"import"} key={"imports"} />
+          <Table country={country} type={"export"} key={"exports"} />
         </Segmented>
       </Section>
 
