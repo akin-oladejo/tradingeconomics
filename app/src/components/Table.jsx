@@ -33,7 +33,7 @@ function Table({ country, type }) {
 
   return (
     <>
-      {isLoading && <p>Loading Profile...</p>}
+      {isLoading && <p>Loading Data...</p>}
       {error && <p>{`Error occurred: ${error}`}</p>}
       {data && (
         <>
@@ -53,7 +53,7 @@ function Table({ country, type }) {
           <table className="w-full my-3 table-auto text-left bg-slate-800">
             <thead>
               <th className=" border-fuchsia-300 text-trade-green bg-slate-900 p-2">Category</th>
-              <th  className=" border-fuchsia-300 text-trade-green bg-slate-900 p-2">Quantity</th>
+              <th  className=" border-fuchsia-300 text-trade-green bg-slate-900 p-2">Value</th>
             </thead>
             <tbody>
               {data.slice(0, rows).map((row, index) => (
