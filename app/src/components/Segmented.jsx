@@ -6,7 +6,7 @@ function Segmented({ tabs, children, className }) {
   return (
     <>
       {/* tab buttons */}
-      <div className="flex flex-wrap gap-2 my-2">
+      <div className="container flex flex-wrap gap-2 mb-3">
         {tabs.map((tab, index) => (
           <div
             key={index}
