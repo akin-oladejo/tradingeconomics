@@ -97,7 +97,7 @@ function App() {
       {!showIndicators && <p>Loading indicators...</p>}
       {showIndicators && (
         <Segmented
-          className="flex flex-col md:flex-row md:flex-wrap gap-5"
+          className="flex flex-col flex-wrap md:flex-row  gap-5"
           tabs={["gdp", "labour", "taxes", "markets", "climate"]}
         >
           <IndicatorCard country={country} indicator={"gdp"} key={"gdp"} />
