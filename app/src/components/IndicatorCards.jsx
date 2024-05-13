@@ -48,7 +48,6 @@ export default function IndicatorCards({ country, indicator, info }) {
               foot={`was: ${
                 i.PreviousValue ? i.PreviousValue.toLocaleString(): ""
               }`}
-              tooltip={info}
             />
           ))}
     </>

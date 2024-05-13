@@ -54,9 +54,9 @@ function Table({ country, type }) {
               <th  className=" border-fuchsia-300 text-trade-green bg-slate-900 p-2">Quantity</th>
             </thead>
             <tbody>
-              {data.slice(0, rows).map((row) => (
+              {data.slice(0, rows).map((row, index) => (
                 <>
-                  <tr>
+                  <tr key={index}>
                     <td  className=" p-2">{row.category}</td>
                     <td  className=" p-2"   >{row.value.toLocaleString()}</td>
                   </tr>
