@@ -1,5 +1,4 @@
-import { MdInfoOutline } from "react-icons/md";
-
+// display information in a simple card
 function Card({ title, content, foot}) {
   return (
     <div className="flex flex-col justify-between bg-slate-800   px-5 text-white p-3 rounded-xl md:min-w-60 gap-2 ">

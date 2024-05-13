@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import Segmented from "./components/Segmented";
 import News from "./components/News";
-import conf from "./conf";
 import IndicatorCard from "./components/IndicatorCards";
 import Profile from "./components/Profile";
 import Section from "./components/Section";
 import Table from "./components/Table";
 
 function App() {
+  // state variables
   const [country, setCountry] = useState("Mexico");
   const [showNews, setShowNews] = useState(false);
   const [showIndicators, setShowIndicators] = useState(false);
+
+  // free country options 
   const countries = ["Sweden", "Mexico", "New Zealand", "Thailand"];
 
+  // load components after some delay to avoid a 409 from rate limiting
   useEffect(() => {
     setShowNews(false);
     setShowIndicators(false);
 
-    // implement a time delay to avoid a 409 from rate limiting
+    // time delay 
     const indicatorTimer = setTimeout(() => {
       console.log("Delaying news by 2s to avoid rate limit");
       setShowIndicators(true);
@@ -36,10 +39,10 @@ function App() {
   return (
     <div className="container text-white flex flex-col lg:w-2/3 lg:m-auto font-sans p-8">
       {/* heading */}
-      <h1 className="font-bold text-3xl">Economic Profile</h1>
+      <h1 className="font-bold text-3xl mb-2">Economic Profile</h1>
       <p>Select a different country to view its economic indicators</p>
 
-      {/* select country */}
+      {/* select country from options */}
       <select
         className="p-2 rounded-md bg-slate-700 text-white mt-5"
         name="Select country"
@@ -114,7 +117,7 @@ function App() {
         )}
       </Section>
 
-      {/* trade charts */}
+      {/* trade tables */}
       <Section title={"Trade by category"}>
         {/* graphs for import/export */}
         <Segmented tabs={["imports", "exports"]}>

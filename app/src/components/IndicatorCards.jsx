@@ -1,3 +1,5 @@
+// Populate up to 6 Card components with indicator information
+
 import Card from "./Card";
 import { useState, useEffect } from "react";
 import conf from "../conf";
@@ -38,7 +40,7 @@ export default function IndicatorCards({ country, indicator, info }) {
       {error && <Card content={error.message} />}
       {data &&
         data
-          .slice(0, 6)
+          .slice(0, 6) 
           .map((i, index) => (
             <Card
               for={indicator}

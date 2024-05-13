@@ -1,3 +1,5 @@
+// present segemented information
+
 import { useState } from "react";
 
 function Segmented({ tabs, children, className }) {

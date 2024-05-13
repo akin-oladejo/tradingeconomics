@@ -1,3 +1,5 @@
+// Obtain some info about selected country and display neatly
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 

@@ -1,3 +1,5 @@
+// table component. there is a slider to increase the number of rows
+
 import axios from "axios";
 import { useState, useEffect } from "react";
 import conf from "../conf";

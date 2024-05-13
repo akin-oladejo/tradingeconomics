@@ -1,3 +1,5 @@
+// Populate up to 5 card components with News data
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./Card";
