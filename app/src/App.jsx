@@ -8,6 +8,7 @@ import conf from "./conf";
 import { parseDate } from "./utils";
 import IndicatorCard from "./components/IndicatorCards";
 import Heading from "./components/Heading";
+import Profile from "./components/Profile";
 // import axios from 'axios'
 // import fs from "fs";
 
@@ -36,7 +37,56 @@ function App() {
   const [country, setCountry] = useState("Mexico");
   const [showNews, setShowNews] = useState(false);
   const [showIndicators, setShowIndicators] = useState(false);
-  // const countries = [{name:'Sweden'}, {name:'Mexico'}, {name:'New Zealand'}, {name:'Thailand'}]
+  // const countrie = [
+  //   {
+  //     name: "Mexico",
+  //     flag: "https://flagcdn.com/mx.svg",
+  //     capital: "Mexico City",
+  //     currency: {
+  //       name: "Mexican peso",
+  //       symbol: "$",
+  //     },
+  //     map: "https://goo.gl/maps/s5g7imNPMDEePxzbA",
+  //     profile:
+  //       "Mexico is a country in the southern portion of North America. It covers 1,972,550 km2 (761,610 sq mi), making it the world's 13th-largest country by area; with a population of almost 130 million, it is the 10th-most-populous country and the most populous Spanish-speaking country.",
+  //   },
+  //   {
+  //     name: "New Zealand",
+  //     flag: "https://flagcdn.com/mx.svg",
+  //     capital: "Mexico City",
+  //     currency: {
+  //       name: "Mexican peso",
+  //       symbol: "$",
+  //     },
+  //     map: "https://goo.gl/maps/s5g7imNPMDEePxzbA",
+  //     profile:
+  //       "Mexico is a country in the southern portion of North America. It covers 1,972,550 km2 (761,610 sq mi), making it the world's 13th-largest country by area; with a population of almost 130 million, it is the 10th-most-populous country and the most populous Spanish-speaking country.",
+  //   },
+  //   {
+  //     name: "Sweden",
+  //     flag: "https://flagcdn.com/se.svg",
+  //     capital: "Stockholm",
+  //     currency: {
+  //       "name": "Swedish krona",
+  //       "symbol": "kr"
+  //       },
+  //     map: "https://goo.gl/maps/iqygE491ADVgnBW39",
+  //     profile:
+  //       "Sweden is a Nordic country located on the Scandinavian Peninsula in Northern Europe. It borders Norway to the west and north, Finland to the east, and is connected to Denmark in the southwest by a bridge–tunnel across the Öresund. At 450,295 square kilometres (173,860 sq mi), Sweden is the largest Nordic country and the fifth-largest country in Europe.",
+  //   },
+  //   {
+  //     name: "Thailand",
+  //     flag: "https://flagcdn.com/mx.svg",
+  //     capital: "Mexico City",
+  //     currency: {
+  //       name: "Mexican peso",
+  //       symbol: "$",
+  //     },
+  //     map: "https://goo.gl/maps/s5g7imNPMDEePxzbA",
+  //     profile:
+  //       "Mexico is a country in the southern portion of North America. It covers 1,972,550 km2 (761,610 sq mi), making it the world's 13th-largest country by area; with a population of almost 130 million, it is the 10th-most-populous country and the most populous Spanish-speaking country.",
+  //   },
+  // ];
   const countries = ["Sweden", "Mexico", "New Zealand", "Thailand"];
 
   // const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
@@ -46,14 +96,14 @@ function App() {
     setShowIndicators(false);
     // implements a time delay to avoid a 409
     const indicatorTimer = setTimeout(() => {
-      console.log('Delaying news by 2s to avoid rate limit')
+      console.log("Delaying news by 2s to avoid rate limit");
       setShowIndicators(true);
     }, 2000);
     const newsTimer = setTimeout(() => {
-      console.log('Delaying indicators by 5s to avoid rate limit')
+      console.log("Delaying indicators by 5s to avoid rate limit");
       setShowNews(true);
     }, 5000);
-    
+
     return () => {
       clearTimeout(newsTimer);
       clearTimeout(indicatorTimer);
@@ -66,9 +116,9 @@ function App() {
       <h1 className="font-bold text-3xl">Economic Profile</h1>
       <p>Select a different country to view its economic indicators</p>
 
-      {/* select component */}
+      {/* select country */}
       <select
-        className="lg:w-1/2 p-2 rounded-md bg-black text-white"
+        className="p-2 rounded-md bg-black text-white"
         name="Select country"
         id=""
         value={country}
@@ -80,19 +130,12 @@ function App() {
           </option>
         ))}
       </select>
-      {/* <SelectCountry /> */}
 
       {/* country details */}
-      <h2 className="text-2xl font-bold mt-5">{country}</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid ducimus
-        sunt odio saepe animi, qui amet optio aut pariatur necessitatibus
-        assumenda perspiciatis iste voluptatum. Veniam illum commodi quibusdam
-        ipsa delectus.
-      </p>
+      <Profile country={country}/>
 
       {/* macro-economic indicators */}
-      <Heading title={'Macro-Economic Indicators'}/>
+      <Heading title={"Macro-Economic Indicators"} />
 
       {!showIndicators && <p>Loading indicators...</p>}
       {showIndicators && (
@@ -101,15 +144,27 @@ function App() {
           tabs={["gdp", "labour", "taxes", "markets", "climate"]}
         >
           <IndicatorCard country={country} indicator={"gdp"} key={"gdp"} />
-          <IndicatorCard country={country} indicator={"labour"} key={"labour"}/>
+          <IndicatorCard
+            country={country}
+            indicator={"labour"}
+            key={"labour"}
+          />
           <IndicatorCard country={country} indicator={"taxes"} key={"taxes"} />
-          <IndicatorCard country={country} indicator={"markets"} key={"markets"} />
-          <IndicatorCard country={country} indicator={"climate"} key={"climate"} />
+          <IndicatorCard
+            country={country}
+            indicator={"markets"}
+            key={"markets"}
+          />
+          <IndicatorCard
+            country={country}
+            indicator={"climate"}
+            key={"climate"}
+          />
         </Segmented>
       )}
 
       {/* trade charts */}
-      <Heading title={'Trade by category'}/>
+      <Heading title={"Trade by category"} />
 
       {/* graphs for import/export */}
       <Segmented tabs={["imports", "exports"]}>
@@ -118,7 +173,7 @@ function App() {
       </Segmented>
 
       {/* show latest news */}
-      <Heading title={'Latest News'}/>
+      <Heading title={"Latest News"} />
       {!showNews && <p>Loading News...</p>}
       {showNews && <News country={country} />}
     </div>

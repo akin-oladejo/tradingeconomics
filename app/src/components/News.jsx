@@ -7,7 +7,7 @@ import conf from "../conf";
 export default function News({ country }) {
   const [newsIsLoading, setNewsIsLoading] = useState(false);
   const [newsError, setNewsError] = useState(null);
-  const [news, setNews] = useState([]);
+  const [news, setNews] = useState(null);
 
   const apiKey = conf.apiKey;
 
@@ -20,7 +20,6 @@ export default function News({ country }) {
         const response = await axios.get(
           `https://api.tradingeconomics.com/news/country/${country}?c=${apiKey}`
         );
-        // console.log(response.data);
         setNews(response.data);
       } catch (newsError) {
         setNewsError(newsError);
@@ -36,7 +35,7 @@ export default function News({ country }) {
     <>
       {newsIsLoading && <p>Loading News...</p>}
       {newsError && <p>{`Error occurred: ${newsError}`}</p>}
-      {!newsIsLoading && !newsError && (
+      {news && (
         <div className="container flex flex-col gap-5" key={"news-div"}>
           {news.slice(0, 5).map((item, index) => (
             <Card

@@ -6,7 +6,7 @@ import axios from "axios";
 export default function IndicatorCards({ country, indicator, info }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
 
   const apiKey = conf.apiKey;
 
@@ -36,10 +36,9 @@ export default function IndicatorCards({ country, indicator, info }) {
     <>
       {isLoading && <p>Loading Info...</p>}
       {error && <Card content={error.message} />}
-      {!error &&
-        !isLoading &&
+      {data &&
         data
-          .slice(0, 5)
+          .slice(0, 6)
           .map((i, index) => (
             <Card
               for={indicator}
