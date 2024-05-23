@@ -10,6 +10,7 @@ function App() {
   // state variables
   const [country, setCountry] = useState("Mexico");
   const [showNews, setShowNews] = useState(false);
+  const [showTable, setShowTable] = useState(false);
   const [showIndicators, setShowIndicators] = useState(false);
 
   // free country options 
@@ -18,6 +19,7 @@ function App() {
   // load components after some delay to avoid a 409 from rate limiting
   useEffect(() => {
     setShowNews(false);
+    setShowTable(false);
     setShowIndicators(false);
 
     // time delay 
@@ -25,13 +27,20 @@ function App() {
       console.log("Delaying news by 2s to avoid rate limit");
       setShowIndicators(true);
     }, 2000);
+
+    const tableTimer = setTimeout(() => {
+      console.log("Delaying indicators by 5s to avoid rate limit");
+      setShowTable(true);
+    }, 4000);
+
     const newsTimer = setTimeout(() => {
       console.log("Delaying indicators by 5s to avoid rate limit");
       setShowNews(true);
-    }, 5000);
+    }, 6000);
 
     return () => {
       clearTimeout(newsTimer);
+      clearTimeout(tableTimer);
       clearTimeout(indicatorTimer);
     };
   }, [country]);
@@ -120,10 +129,11 @@ function App() {
       {/* trade tables */}
       <Section title={"Trade by category"}>
         {/* graphs for import/export */}
-        <Segmented tabs={["imports", "exports"]}>
+        {!showNews && <p>Loading Table...</p>}
+        {showTable && <Segmented tabs={["imports", "exports"]}>
           <Table country={country} type={"import"} key={"imports"} />
           <Table country={country} type={"export"} key={"exports"} />
-        </Segmented>
+        </Segmented>}
       </Section>
 
       {/* show latest news */}
